@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מחשבון קומקום</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Varela Round', sans-serif;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-800 via-cyan-900 to-slate-900 p-6 flex items-center justify-center">
+    <div class="max-w-2xl w-full">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-cyan-700 to-slate-700 rounded-full mb-4 shadow-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-coffee w-10 h-10 text-cyan-200"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M8 20v2"/><path d="M16 20v2"/><path d="M17 6H7C4.6 6 2 7.5 2 10v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-9c0-2.5-2.6-4-5-4Z"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/></svg>
+            </div>
+            <h1 class="text-4xl font-bold text-cyan-100 mb-2">מחשבון קומקום</h1>
+            <p class="text-cyan-300">חשב כמה זמן ייקח לחמם את המים</p>
+        </div>
+
+        <!-- Main Card -->
+        <div class="shadow-2xl border-0 bg-gradient-to-br from-slate-700 to-slate-800 rounded-lg">
+            <div class="bg-gradient-to-r from-slate-700 via-cyan-800 to-slate-700 text-white rounded-t-lg border-b border-slate-600 p-6">
+                <h2 class="text-2xl text-center text-cyan-100">כמה כוסות תרצה?</h2>
+            </div>
+            <div class="p-8">
+                <!-- Input Section -->
+                <div class="mb-8">
+                    <label for="cups" class="text-lg text-cyan-200 mb-3 block text-center">
+                        הזן כמות כוסות
+                    </label>
+                    <input
+                        id="cups"
+                        type="number"
+                        min="0"
+                        max="20"
+                        value="1"
+                        oninput="updateKettle()"
+                        class="w-full text-center text-3xl h-20 border-2 border-cyan-700 focus:border-cyan-500 focus:ring-cyan-500 rounded-xl bg-slate-800 text-cyan-100"
+                    />
+                </div>
+
+                <!-- Info Cards Grid -->
+                <div class="grid md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-gradient-to-br from-slate-600 to-slate-700 p-4 rounded-xl border-2 border-slate-500">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-coffee w-5 h-5 text-cyan-400"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M8 20v2"/><path d="M16 20v2"/><path d="M17 6H7C4.6 6 2 7.5 2 10v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-9c0-2.5-2.6-4-5-4Z"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/></svg>
+                            <span class="text-sm text-cyan-300">כוסות</span>
+                        </div>
+                        <div id="display-cups" class="text-2xl font-bold text-cyan-100">1</div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-cyan-800 to-cyan-900 p-4 rounded-xl border-2 border-cyan-700">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-droplets w-5 h-5 text-cyan-300"><path d="M7 16.3c2.2 0 4-1.83 4-4.05 0-1.16-.57-2.26-1.72-3.18"/><path d="M2.92 9.5C.28 11.83 0 16 3 19c-.83 0-2 .3-2 2 2 0 2-2 2-2 1.16-.57 2.26-1.72 3.18-2.88"/><path d="M16.8 13.5c1.76 1.76 2.55 2.65 3.73 3.73"/><path d="M12 21.3c-2.2 0-4-1.83-4-4.05 0-1.16.57-2.26 1.72-3.18"/><path d="M21.08 14.5c2.64-2.33 2.92-6.5 0-9.5-2.2 0-2.3.6-2.9 1-1.16.57-2.26 1.72-3.18 2.88"/></svg>
+                            <span class="text-sm text-cyan-200">נפח מים</span>
+                        </div>
+                        <div id="display-water-volume" class="text-2xl font-bold text-cyan-100">200 מ״ל</div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-slate-600 to-slate-700 p-4 rounded-xl border-2 border-slate-500">
+                        <div class="flex items-center gap-2 mb-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock w-5 h-5 text-cyan-400"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <span class="text-sm text-cyan-300">זמן חימום כולל</span>
+                        </div>
+                        <div id="display-heating-time-summary" class="text-lg font-bold text-cyan-100">0 דק׳ 0 שנ׳</div>
+                    </div>
+                </div>
+
+                <!-- Result Section - Detailed Time -->
+                <div class="bg-gradient-to-r from-cyan-800 via-teal-800 to-cyan-800 p-6 rounded-xl text-white text-center border-2 border-cyan-700">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap w-6 h-6 text-cyan-300"><path d="M12 2L13.5 10L22 10L10 22L11.5 14L2 14L12 2Z"/></svg>
+                        <span class="text-lg text-cyan-100">זמן החימום המשוער</span>
+                    </div>
+                    
+                    <div class="flex justify-center items-center gap-6">
+                        <!-- Hours -->
+                        <div class="flex flex-col items-center">
+                            <div id="display-hours" class="text-5xl font-bold text-cyan-100">00</div>
+                            <div class="text-sm text-cyan-300 mt-1">שעות</div>
+                        </div>
+                        
+                        <div class="text-4xl font-bold text-cyan-200">:</div>
+                        
+                        <!-- Minutes -->
+                        <div class="flex flex-col items-center">
+                            <div id="display-mins" class="text-5xl font-bold text-cyan-100">00</div>
+                            <div class="text-sm text-cyan-300 mt-1">דקות</div>
+                        </div>
+                        
+                        <div class="text-4xl font-bold text-cyan-200">:</div>
+                        
+                        <!-- Seconds -->
+                        <div class="flex flex-col items-center">
+                            <div id="display-secs" class="text-5xl font-bold text-cyan-100">00</div>
+                            <div class="text-sm text-cyan-300 mt-1">שניות</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Warning if exceeds max volume -->
+                <div id="exceeds-warning" class="mt-4 p-4 bg-amber-900 border-2 border-amber-700 rounded-xl text-center hidden">
+                    <p class="text-amber-200">
+                        ⚠️ כמות הכוסות עולה על נפח הקומקום המקסימלי (<span id="max-kettle-volume-warning"></span> מ״ל)
+                    </p>
+                    <p class="text-sm text-amber-300 mt-1">
+                        החישוב מבוסס על נפח מקסימלי של <span id="max-kettle-volume-info"></span> מ״ל
+                    </p>
+                </div>
+
+                <!-- Info Footer -->
+                <div class="mt-6 pt-6 border-t-2 border-slate-600">
+                    <div class="grid grid-cols-2 gap-4 text-center text-sm text-cyan-300">
+                        <div>
+                            <div class="font-bold text-cyan-200">נפח כוס</div>
+                            <div id="volume-per-cup">200 מ״ל</div>
+                        </div>
+                        <div>
+                            <div class="font-bold text-cyan-200">נפח קומקום</div>
+                            <div id="max-kettle-volume-footer">1700 מ״ל</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Note -->
+        <div class="mt-6 text-center text-sm text-cyan-300">
+            <p>* החישוב מבוסס על קומקום סטנדרטי בהספק 2000W</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
